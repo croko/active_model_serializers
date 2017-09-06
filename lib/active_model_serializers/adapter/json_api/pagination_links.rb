@@ -24,8 +24,7 @@ module ActiveModelSerializers
             self:  location_url,
             first: first_page_url,
             prev:  prev_page_url,
-            next:  next_page_url,
-            last:  last_page_url
+            next:  next_page_url
           }
         end
 
@@ -43,13 +42,13 @@ module ActiveModelSerializers
           url_for_page(1)
         end
 
-        def last_page_url
-          if collection.total_pages == 0
-            url_for_page(FIRST_PAGE)
-          else
-            url_for_page(collection.total_pages)
-          end
-        end
+        # def last_page_url
+        #   if collection.total_pages == 0
+        #     url_for_page(FIRST_PAGE)
+        #   else
+        #     url_for_page(collection.total_pages)
+        #   end
+        # end
 
         def prev_page_url
           return nil if collection.current_page == FIRST_PAGE
@@ -57,7 +56,7 @@ module ActiveModelSerializers
         end
 
         def next_page_url
-          return nil if collection.total_pages == 0 || collection.current_page == collection.total_pages
+          return nil if collection.next_page.blank?
           url_for_page(collection.next_page)
         end
 
